@@ -154,27 +154,32 @@ $('form').submit(function(e){
     $('#name').addClass('error');
     $('#name').focus();
   } else if(!emailAddress.test($('#mail').val())) {
-    errorMessage += "Please provide an Email";
+    errorMessage = "Please provide an Email";
     $('label[for="mail"]').html('<span class="error-message"> ' + errorMessage + '</span>');
     $('#mail').addClass('error');
     $('#mail').focus();
   } else if($(".activities > label > input:checked").length === 0 ) {
-    errorMessage += "Please choose at least one activity";
+    errorMessage = "Please choose at least one activity";
     $('.activities > legend').html('<span class="error-message"> ' + errorMessage + '</span>');
     $('.activities').addClass('error');
     $('.activities').focus();
-  } else if($('#payment option:selected').val() === "credit card" && !creditCard.test   ($("#cc-num").val())) {
-    errorMessage += "Please provide a valid credit card number";
+  }else if($('#payment option:selected').val() === "credit card" && !creditCard.test   ($("#cc-num").val())) {
+    errorMessage = "Please provide a valid credit card number";
     $('label[for="cc-num"]').html('<span class="error-message"> ' + errorMessage + '</span>');
     $('#cc-num').addClass('error');
     $('#cc-num').focus();
+  } else if($('#payment option:selected').val() === "select_method") {
+    errorMessage = "Please select a payment method";
+    $('label[for="payment"]').html('<span class="error-message"> ' + errorMessage + '</span>');
+    $('#cc-num').addClass('error');
+    $('#cc-num').focus();
   } else if($('#payment option:selected').val() === "credit card" && !zipCode.test($("#zip").val())) {
-    errorMessage += "Please provide a valid zip code";
+    errorMessage = "Please provide a valid zip code";
     $('label[for="zip"]').html('<span class="error-message"> ' + errorMessage + '</span>');
     $('#zip').addClass('error');
     $('#zip').focus();
   } else if($('#payment option:selected').val() === "credit card" && $('#cvv').val().length < 3) {
-    errorMessage += "Please provide a valid CVV";
+    errorMessage = "Please provide a valid CVV";
     $('label[for="cvv"]').html('<span class="error-message"> ' + errorMessage + '</span>');
     $('#cvv').addClass('error');
     $('#cvv').focus();
