@@ -1,7 +1,6 @@
 // focus name field on page load
-$(function() {
-  $('#name').focus();
-});
+$('#name').focus();
+
 
 // create form field
 $('.basic-info').append('<input type="text" id="other-input" placeholder="Please list a job">');
@@ -22,6 +21,7 @@ $('#colors-js-puns').append('<p class="text">Please select a T-shirt theme</p>')
 
 //T-shirt color options are revealed based on the design selected.
 $('#design').change(function(){
+  // here im over-riding the html and writing in my own options according to what is selected.
   if ($('#design option:selected').val() === "js puns") {
     $('#color').show();
     $('.text').hide();
@@ -39,6 +39,8 @@ $('#design').change(function(){
 
 // User cannot select two activities that are at the same time
 // Total cost of selected activities is calculated and displayed below the list of activities
+
+// i tried really hard to loop through these by using .each but the code was really messy, so I put them in variables
 const jsFrameworks = $('input[name="js-frameworks"]');
 const jsLibs = $('input[name="js-libs"]');
 const express = $('input[name="express"]');
@@ -46,14 +48,18 @@ const node = $('input[name="node"]');
 const buildTools = $('input[name="build-tools"]');
 const npm = $('input[name="npm"]');
 
+// created total cost variable 
 totalCost = 0;
+// created element to display it
 $('.activities').append('<div class="total"></div>');
 
+// addTotal cost function will add up cost of activities
 const addTotal = (cost) => {
   totalCost += cost;
   $('.total').html("Total: $" + totalCost);
 }
 
+// if clicked the cost is added with addTotal function this is done with every activity
 $('input[name="all"]').change(function(){
   if($(this).prop("checked")) {
     addTotal(200);
@@ -62,6 +68,7 @@ $('input[name="all"]').change(function(){
   }
 });
 
+// if an activity is at the same time as another the disabled attr toggled on and off
 jsFrameworks.change(function(){
   if($(this).prop("checked")) {
     addTotal(100);
@@ -119,8 +126,10 @@ npm.change(function(){
 });
 
 // When a user chooses a payment option, the chosen payment section is revealed and the other payment sections are hidden
-$('#credit-card, #paypal, #bitcoin').hide();
 
+// hide the payment elements until they are selected
+$('#credit-card, #paypal, #bitcoin').hide();
+// fade the payment elements in and out depending on what is selected
 $('#payment').change(function(){
   if($('#payment option:selected').val() === "credit card") {
     $('#credit-card').fadeIn('fast');
@@ -139,15 +148,13 @@ $('#payment').change(function(){
 
 $('form').submit(function(e){
   e.preventDefault();
-
-
+//created variables for form validation
   let errorMessage = "";
-  
   const emailAddress = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
   const creditCard = /\b\d{4}(| |-)\d{4}\1\d{4}\1\d{4}\b/g;
   const zipCode = /^\d{5}(?:[-\s]\d{4})?$/;
 
-
+// wen through all the fields and add errors at their respective places
   if($('#name').val() === "") {
     errorMessage += "Please provide a name";
     $('label[for="name"]').html('<span class="error-message"> ' + errorMessage + '</span>');
